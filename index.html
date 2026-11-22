@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Creaciones | SrAlvarezX8</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; min-height: 100vh; padding-bottom: 50px; }
+
+        header { background: rgba(0,0,0,0.3); padding: 25px 20px; text-align: center; }
+        .logo { max-width: 100px; margin-bottom: 10px; border-radius: 10px; }
+        header h1 { font-size: 1.8rem; color: #4ade80; margin-bottom: 5px; }
+        header p { color: #94a3b8; font-size: 1rem; }
+
+        nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 20px; max-width: 1000px; margin: 0 auto; }
+        nav button { background: rgba(255,255,255,0.1); border: none; color: #fff; padding: 10px 22px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+        nav button:hover, nav button.activo { background: #4ade80; color: #000; font-weight: bold; }
+
+        .buscador { max-width: 450px; margin: 10px auto 30px; padding: 0 20px; }
+        #search { width: 100%; padding: 12px 15px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem; }
+        #search::placeholder { color: #94a3b8; }
+
+        main { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .seccion { display: none; }
+        .seccion.mostrar { display: block; }
+        .seccion h2 { font-size: 1.4rem; margin: 10px 0 25px; color: #4ade80; border-bottom: 2px solid #4ade80; padding-bottom: 8px; }
+
+        .contenedor { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+
+        .tarjeta { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; transition: transform 0.3s; }
+        .tarjeta-img { width: 100%; height: 160px; object-fit: cover; background: rgba(74, 222, 128, 0.1); }
+        .tarjeta-cuerpo { padding: 16px; }
+        .etiqueta { display: inline-block; background: #4ade80; color: #000; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; font-weight: bold; }
+        .tarjeta h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .tarjeta p { font-size: 0.88rem; color: #94a3b8; margin-bottom: 14px; line-height: 1.5; }
+        .btn { display: inline-block; background: #4ade80; color: #000; padding: 9px 18px; border-radius: 7px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: background 0.2s; }
+        .btn:hover { background: #22c55e; }
+
+        .vacio { text-align: center; padding: 50px 20px; color: #64748b; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <!-- TU LOGO AQUÍ -->
+    <img src="ENLACE_DE_TU_LOGO_AQUI" alt="Logo" class="logo">
+    <h1>✨ Mis Creaciones de Minecraft ✨</h1>
+    <p>Hecho por SrAlvarezX8 | Bedrock Edition</p>
+</header>
+
+<nav>
+    <button class="activo" onclick="cambiarSeccion('addons')">🎮 Addons</button>
+    <button onclick="cambiarSeccion('texturas')">🎨 Texturas</button>
+    <button onclick="cambiarSeccion('packs')">📦 Packs</button>
+</nav>
+
+<div class="buscador">
+    <input type="text" id="search" placeholder="🔍 Buscar...">
+</div>
+
+<main>
+    <!-- SECCIÓN ADDONS -->
+    <section id="addons" class="seccion mostrar">
+        <h2>🎮 Addons</h2>
+        <div class="contenedor" id="lista-addons">
+            <div class="vacio">Aquí aparecerán tus addons cuando los agregues ✨</div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN TEXTURAS -->
+    <section id="texturas" class="seccion">
+        <h2>🎨 Texturas</h2>
+        <div class="contenedor" id="lista-texturas">
+            <div class="vacio">Aquí aparecerán tus texturas cuando las agregues ✨</div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PACKS -->
+    <section id="packs" class="seccion">
+        <h2>📦 Packs</h2>
+        <div class="contenedor" id="lista-packs">
+            <div class="vacio">Aquí aparecerán tus packs cuando los agregues ✨</div>
+        </div>
+    </section>
+</main>
+
+<script>
+function cambiarSeccion(id) {
+    document.querySelectorAll('.seccion').forEach(s => s.classList.remove('mostrar'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('activo'));
+    document.getElementById(id).classList.add('mostrar');
+    event.target.classList.add('activo');
+    document.getElementById('search').value = '';
+    buscar('');
+}
+
+const buscador = document.getElementById('search');
+buscador.addEventListener('input', function() {
+    buscar(this.value.toLowerCase());
+});
+
+function buscar(texto) {
+    document.querySelectorAll('.tarjeta').forEach(tarjeta => {
+        const nombre = tarjeta.getAttribute('data-nombre').toLowerCase();
+        tarjeta.style.display = (nombre.includes(texto)) ? '' : 'none';
+    });
+}
+</script>
+
+</body>
+</html>
+
