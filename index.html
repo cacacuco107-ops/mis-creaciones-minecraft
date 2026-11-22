@@ -5,114 +5,260 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Creaciones | SrAlvarezX8</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; min-height: 100vh; padding-bottom: 50px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        :root {
+            --fondo: #12121f;
+            --tarjeta: #1e1e2f;
+            --resaltado: #a855f7;
+            --texto: #ffffff;
+            --texto-claro: #b4b4c4;
+            --boton: #a855f7;
+            --boton-hover: #9333ea;
+        }
+        body { background: var(--fondo); color: var(--texto); min-height: 100vh; padding-bottom: 60px; }
 
-        header { background: rgba(0,0,0,0.3); padding: 25px 20px; text-align: center; }
-        .logo { max-width: 100px; margin-bottom: 10px; border-radius: 10px; }
-        header h1 { font-size: 1.8rem; color: #4ade80; margin-bottom: 5px; }
-        header p { color: #94a3b8; font-size: 1rem; }
+        /* === CABECERA === */
+        header { background: linear-gradient(180deg, #1a1a2e 0%, var(--fondo) 100%); padding: 30px 20px 20px; max-width: 1200px; margin: 0 auto; }
+        .perfil { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .logo { width: 60px; height: 60px; border-radius: 12px; object-fit: contain; background: var(--tarjeta); padding: 5px; }
+        .titulo-grupo h1 { font-size: 1.4rem; color: var(--texto); }
+        .titulo-grupo p { color: var(--texto-claro); font-size: 0.9rem; }
 
-        nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 20px; max-width: 1000px; margin: 0 auto; }
-        nav button { background: rgba(255,255,255,0.1); border: none; color: #fff; padding: 10px 22px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
-        nav button:hover, nav button.activo { background: #4ade80; color: #000; font-weight: bold; }
+        /* === NAVEGACIÓN === */
+        nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 20px 20px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid #2a2a3f; }
+        nav button { background: transparent; border: none; color: var(--texto-claro); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: all 0.2s; }
+        nav button.activo { background: var(--resaltado); color: white; font-weight: 600; }
+        nav button:hover:not(.activo) { background: var(--tarjeta); color: var(--texto); }
 
-        .buscador { max-width: 450px; margin: 10px auto 30px; padding: 0 20px; }
-        #search { width: 100%; padding: 12px 15px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem; }
-        #search::placeholder { color: #94a3b8; }
+        /* === BUSCADOR === */
+        .buscador { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .buscador input { width: 100%; padding: 14px 18px; border-radius: 10px; border: none; background: var(--tarjeta); color: var(--texto); font-size: 0.95rem; }
+        .buscador input::placeholder { color: var(--texto-claro); }
 
-        main { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        /* === CONTENEDOR PRINCIPAL === */
+        main { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .seccion { display: none; }
         .seccion.mostrar { display: block; }
-        .seccion h2 { font-size: 1.4rem; margin: 10px 0 25px; color: #4ade80; border-bottom: 2px solid #4ade80; padding-bottom: 8px; }
+        .seccion h2 { font-size: 1.3rem; margin-bottom: 20px; color: var(--texto); }
+        .resultados { font-size: 0.9rem; color: var(--texto-claro); margin-bottom: 15px; }
 
-        .contenedor { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+        /* === GRID DE TARJETAS === */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
 
-        .tarjeta { background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; transition: transform 0.3s; }
-        .tarjeta-img { width: 100%; height: 160px; object-fit: cover; background: rgba(74, 222, 128, 0.1); }
-        .tarjeta-cuerpo { padding: 16px; }
-        .etiqueta { display: inline-block; background: #4ade80; color: #000; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; margin-bottom: 10px; font-weight: bold; }
-        .tarjeta h3 { font-size: 1.1rem; margin-bottom: 8px; }
-        .tarjeta p { font-size: 0.88rem; color: #94a3b8; margin-bottom: 14px; line-height: 1.5; }
-        .btn { display: inline-block; background: #4ade80; color: #000; padding: 9px 18px; border-radius: 7px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: background 0.2s; }
-        .btn:hover { background: #22c55e; }
+        /* === TARJETA DE ADDON === */
+        .tarjeta { background: var(--tarjeta); border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .tarjeta:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15); }
+        .tarjeta-img { width: 100%; height: 160px; object-fit: cover; background: #2a2a3f; }
+        .etiqueta-tipo { position: absolute; margin: 12px; background: var(--resaltado); color: white; font-size: 0.7rem; font-weight: bold; padding: 4px 10px; border-radius: 6px; }
+        .tarjeta-cuerpo { padding: 14px; }
+        .tarjeta h3 { font-size: 1rem; margin-bottom: 6px; color: var(--texto); }
+        .tarjeta-datos { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--texto-claro); }
+        .descargas { display: flex; align-items: center; gap: 4px; }
 
-        .vacio { text-align: center; padding: 50px 20px; color: #64748b; font-size: 0.95rem; }
+        /* === PÁGINA INDIVIDUAL === */
+        .pagina-detalle { display: none; }
+        .pagina-detalle.mostrar { display: block; }
+        .volver { background: transparent; border: none; color: var(--resaltado); font-size: 0.95rem; cursor: pointer; padding: 10px 0; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
+        .detalle-portada { width: 100%; max-height: 280px; object-fit: cover; border-radius: 14px; margin-bottom: 20px; }
+        .detalle-cabecera { margin-bottom: 25px; }
+        .detalle-cabecera h2 { font-size: 1.8rem; margin-bottom: 8px; }
+        .creado-por { color: var(--texto-claro); font-size: 0.95rem; margin-bottom: 15px; }
+        .etiquetas { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .etiqueta { background: var(--tarjeta); color: var(--texto); font-size: 0.8rem; padding: 6px 14px; border-radius: 20px; }
+        .etiqueta.resaltada { background: var(--resaltado); color: white; }
+        .info-fila { display: flex; gap: 30px; margin-bottom: 20px; flex-wrap: wrap; }
+        .info-item { font-size: 0.9rem; }
+        .info-item strong { display: block; color: var(--texto); font-size: 1rem; }
+        .btn-descargar { background: var(--boton); color: white; border: none; font-size: 1rem; font-weight: 600; padding: 14px 32px; border-radius: 10px; cursor: pointer; transition: background 0.2s; width: 100%; max-width: 320px; }
+        .btn-descargar:hover { background: var(--boton-hover); }
+        .descripcion { margin-top: 30px; line-height: 1.7; color: #ddd; }
+        .descripcion h3 { font-size: 1.1rem; margin: 25px 0 10px; color: var(--texto); }
+
+        .vacio { text-align: center; padding: 60px 20px; color: var(--texto-claro); }
     </style>
 </head>
 <body>
 
+<!-- CABECERA CON TU PERFIL -->
 <header>
-    <!-- TU LOGO AQUÍ -->
-    <img src="https://files.catbox.moe/r5gdky.png" alt="Logo" class="logo">
-    <h1>✨ Mis Creaciones de Minecraft ✨</h1>
-    <p>Hecho por SrAlvarezX8 | Bedrock Edition</p>
+    <div class="perfil">
+        <img src="ENLACE_DE_TU_LOGO" alt="Logo" class="logo">
+        <div class="titulo-grupo">
+            <h1>SrAlvarezX8</h1>
+            <p>Minecraft Bedrock — Creaciones</p>
+        </div>
+    </div>
 </header>
 
-<nav>
+<!-- NAVEGACIÓN -->
+<nav id="navegacion">
     <button class="activo" onclick="cambiarSeccion('addons')">🎮 Addons</button>
     <button onclick="cambiarSeccion('texturas')">🎨 Texturas</button>
     <button onclick="cambiarSeccion('packs')">📦 Packs</button>
 </nav>
 
+<!-- BUSCADOR -->
 <div class="buscador">
     <input type="text" id="search" placeholder="🔍 Buscar...">
 </div>
 
-<main>
-    <!-- SECCIÓN ADDONS -->
+<main id="contenido-principal">
+    <!-- === SECCIÓN ADDONS === -->
     <section id="addons" class="seccion mostrar">
-        <h2>🎮 Addons</h2>
-        <div class="tarjeta" data-nombre="Duplicate_x2">
-    <img src="https://files.catbox.moe/jc3zx1.png" alt="Imagen del addon" class="tarjeta-img">
-    <div class="tarjeta-cuerpo">
-        <span class="etiqueta">Addon</span>
-        <h3>Duplicate_x2</h3>
-        <p>Versión: 1.26.50+ | Creador: SrAlvarezX8</p>
-        <a href="https://uc-share.com/s/a720b5a42e5f4?la=es-mx" class="btn" target="_blank">⬇️ Descargar</a>
-    </div>
-</div>
-
-    </section>
-
-    <!-- SECCIÓN TEXTURAS -->
-    <section id="texturas" class="seccion">
-        <h2>🎨 Texturas</h2>
-        <div class="contenedor" id="lista-texturas">
-            <div class="vacio">Aquí aparecerán tus texturas cuando las agregues ✨</div>
+        <p class="resultados" id="contador-resultados">Cargando...</p>
+        <div class="grid" id="lista-addons">
+            <!-- TUS ADDONS VAN AQUÍ -->
         </div>
     </section>
 
-    <!-- SECCIÓN PACKS -->
+    <!-- === SECCIÓN TEXTURAS === -->
+    <section id="texturas" class="seccion">
+        <p class="resultados">Cargando...</p>
+        <div class="grid" id="lista-texturas">
+            <div class="vacio">Próximamente ✨</div>
+        </div>
+    </section>
+
+    <!-- === SECCIÓN PACKS === -->
     <section id="packs" class="seccion">
-        <h2>📦 Packs</h2>
-        <div class="contenedor" id="lista-packs">
-            <div class="vacio">Aquí aparecerán tus packs cuando los agregues ✨</div>
+        <p class="resultados">Cargando...</p>
+        <div class="grid" id="lista-packs">
+            <div class="vacio">Próximamente ✨</div>
+        </div>
+    </section>
+
+    <!-- === PÁGINA INDIVIDUAL DE ADDON === -->
+    <section id="detalle" class="pagina-detalle">
+        <button class="volver" onclick="volverALista()">← Volver a la lista</button>
+        <img id="detalle-img" src="" alt="" class="detalle-portada">
+        <div class="detalle-cabecera">
+            <h2 id="detalle-nombre">Nombre del Addon</h2>
+            <p class="creado-por">Creado por SrAlvarezX8</p>
+            <div class="etiquetas">
+                <span class="etiqueta resaltada" id="detalle-tipo">Addon</span>
+                <span class="etiqueta" id="detalle-plataforma">Bedrock</span>
+            </div>
+            <div class="info-fila">
+                <div class="info-item">
+                    <span>Descargas</span>
+                    <strong id="detalle-descargas">0</strong>
+                </div>
+                <div class="info-item">
+                    <span>Actualizado</span>
+                    <strong id="detalle-fecha">Hoy</strong>
+                </div>
+                <div class="info-item">
+                    <span>Versión</span>
+                    <strong id="detalle-version">1.26.50+</strong>
+                </div>
+            </div>
+            <a id="detalle-enlace" href="" class="btn-descargar" target="_blank">⬇️ Descargar</a>
+        </div>
+        <div class="descripcion">
+            <h3>📝 Descripción</h3>
+            <p id="detalle-descripcion">Descripción del addon aparecerá aquí...</p>
         </div>
     </section>
 </main>
 
 <script>
+// Base de datos con tus creaciones
+const creaciones = {
+    addons: [
+        {
+            id: 'duplicate-x2',
+            nombre: 'Duplicate x2',
+            tipo: 'Addon',
+            imagen: 'https://files.catbox.moe/jc3zx1.png',
+            descargas: '0',
+            fecha: '22 de noviembre',
+            version: '1.26.50+',
+            descripcion: 'Agáchate y los ítems en tu inventario se duplican por 2. Solo funciona con ítems apilables y se detiene automáticamente al llenar la pila.',
+            enlace: 'https://uc-share.com/s/a720b5a42e5f4?la=es-mx'
+        }
+        // Agrega más aquí copiando el bloque de arriba
+    ],
+    texturas: [],
+    packs: []
+};
+
+let seccionActiva = 'addons';
+
+// Renderizar lista
+function renderizarLista(categoria, filtro = '') {
+    const contenedor = document.getElementById(`lista-${categoria}`);
+    const items = creaciones[categoria].filter(item => 
+        item.nombre.toLowerCase().includes(filtro.toLowerCase())
+    );
+    
+    document.getElementById('contador-resultados').textContent = 
+        `${items.length} resultado${items.length !== 1 ? 's' : ''}`;
+    
+    if (items.length === 0) {
+        contenedor.innerHTML = '<div class="vacio">Próximamente ✨</div>';
+        return;
+    }
+
+    contenedor.innerHTML = items.map(item => `
+        <div class="tarjeta" onclick="abrirDetalle('${categoria}', '${item.id}')">
+            <span class="etiqueta-tipo">${item.tipo}</span>
+            <img src="${item.imagen}" alt="${item.nombre}" class="tarjeta-img">
+            <div class="tarjeta-cuerpo">
+                <h3>${item.nombre}</h3>
+                <div class="tarjeta-datos">
+                    <span class="descargas">⬇ ${item.descargas}</span>
+                    <span>${item.fecha}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Cambiar de sección
 function cambiarSeccion(id) {
+    seccionActiva = id;
     document.querySelectorAll('.seccion').forEach(s => s.classList.remove('mostrar'));
+    document.getElementById('detalle').classList.remove('mostrar');
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('activo'));
     document.getElementById(id).classList.add('mostrar');
     event.target.classList.add('activo');
     document.getElementById('search').value = '';
-    buscar('');
+    renderizarLista(id);
 }
 
-const buscador = document.getElementById('search');
-buscador.addEventListener('input', function() {
-    buscar(this.value.toLowerCase());
+// Abrir página individual
+function abrirDetalle(categoria, id) {
+    const item = creaciones[categoria].find(i => i.id === id);
+    if (!item) return;
+
+    document.getElementById('detalle-img').src = item.imagen;
+    document.getElementById('detalle-img').alt = item.nombre;
+    document.getElementById('detalle-nombre').textContent = item.nombre;
+    document.getElementById('detalle-tipo').textContent = item.tipo;
+    document.getElementById('detalle-descargas').textContent = item.descargas;
+    document.getElementById('detalle-fecha').textContent = item.fecha;
+    document.getElementById('detalle-version').textContent = item.version;
+    document.getElementById('detalle-descripcion').textContent = item.descripcion;
+    document.getElementById('detalle-enlace').href = item.enlace;
+
+    document.querySelectorAll('.seccion').forEach(s => s.classList.remove('mostrar'));
+    document.getElementById('detalle').classList.add('mostrar');
+    window.scrollTo(0, 0);
+}
+
+// Volver a la lista
+function volverALista() {
+    document.getElementById('detalle').classList.remove('mostrar');
+    document.getElementById(seccionActiva).classList.add('mostrar');
+}
+
+// Buscador
+document.getElementById('search').addEventListener('input', e => {
+    renderizarLista(seccionActiva, e.target.value);
 });
 
-function buscar(texto) {
-    document.querySelectorAll('.tarjeta').forEach(tarjeta => {
-        const nombre = tarjeta.getAttribute('data-nombre').toLowerCase();
-        tarjeta.style.display = (nombre.includes(texto)) ? '' : 'none';
-    });
-}
+// Inicializar
+renderizarLista('addons');
 </script>
 
 </body>
